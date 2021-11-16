@@ -41,18 +41,14 @@ class Grammar:
                 else:
                     self.__productions[nonterminal].append(production)
 
-
         faFile.close()
 
-
     def checkCFG(self):
-        for production in self.__productions.keys():
-            nrNonterminals = 0
+        for key in self.__productions.keys():
+            counter = 0
             for nonterminal in self.__nonterminals:
-                if nonterminal in self.__productions[production]:
-                    nrNonterminals += 1
-
-            if nrNonterminals > 1:
+                if nonterminal in key:
+                    counter += 1
+            if counter > 1:
                 return False
-
         return True
