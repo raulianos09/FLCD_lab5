@@ -24,18 +24,15 @@ class Grammar:
     def readFromFile(self):
         faFile = open(self.__faFilename, "r")
         lines = faFile.readlines()
-        self.__initialNonterminal = lines[0].split()
+        self.__initialNonterminal = lines[0].strip();
         self.__nonterminals = lines[1].split()
         self.__terminals = lines[2].split()
 
         for line in lines[3:]:
             if line != "\n":
                 nonterminal, production = line.split("=")
-                if len(production) > 2:
-                    production = production[1:-1]
-                else:
-                    production = production[1:]
-
+                nonterminal = nonterminal.strip()
+                production = production.strip()
                 if nonterminal not in self.__productions.keys():
                     self.__productions[nonterminal] = [production]
                 else:
