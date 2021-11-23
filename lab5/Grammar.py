@@ -24,6 +24,9 @@ class Grammar:
     def getProductions(self):
         return self.__productions
 
+    def setProductions(self, key, value):
+        self.__productions[key] = value
+
     def getProductionsForNonterminal(self, nonterminal):
         return self.__productions[nonterminal]
 
@@ -39,12 +42,17 @@ class Grammar:
                 nonterminal, production = line.split("=")
                 nonterminal = nonterminal.strip()
                 production = production.strip()
-                if nonterminal not in self.__productions.keys():
-                    self.__productions[nonterminal] = [production]
-                else:
-                    self.__productions[nonterminal].append(production)
+                self.addProduct(nonterminal, production)
 
         faFile.close()
+
+
+    def addProduct(self, nonterminal, production):
+        if nonterminal not in self.__productions.keys():
+            self.__productions[nonterminal] = [production]
+        else:
+            self.__productions[nonterminal].append(production)
+
 
     def checkCFG(self):
         for key in self.__productions.keys():

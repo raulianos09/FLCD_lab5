@@ -16,8 +16,8 @@ def printMenu():
 if __name__ == '__main__':
     myGrammar = Grammar("g1.txt")
     myGrammar.readFromFile()
-    parser = Parser(myGrammar)
-    parser.closure()
+    # parser = Parser(myGrammar)
+    # parser.closure()
     while True:
         printMenu()
         operation = int(input("Please enter a command:\n"))
