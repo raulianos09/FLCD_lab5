@@ -1,4 +1,5 @@
 from Grammar import Grammar
+from Parser import Parser
 
 
 def printMenu():
@@ -15,7 +16,8 @@ def printMenu():
 if __name__ == '__main__':
     myGrammar = Grammar("g1.txt")
     myGrammar.readFromFile()
-
+    parser = Parser(myGrammar)
+    parser.closure()
     while True:
         printMenu()
         operation = int(input("Please enter a command:\n"))
@@ -37,3 +39,4 @@ if __name__ == '__main__':
                 print("The given grammar is not Context Free")
         if operation not in range(0, 6):
             print("Inexistent command")
+

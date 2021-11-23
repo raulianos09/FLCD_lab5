@@ -12,6 +12,12 @@ class Grammar:
             toPrint += x + " "
         return toPrint
 
+    def getInitialNonterminal(self):
+        return self.__initialNonterminal
+
+    def setInitialNonterminal(self, newNonTerminal):
+        self.__initialNonterminal = newNonTerminal
+
     def getTerminals(self):
         return self.__terminals
 
