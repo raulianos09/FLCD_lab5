@@ -1,5 +1,5 @@
 from Grammar import Grammar
-from Parser import Parser
+from Parser import Parser, Production
 
 
 def printMenu():
@@ -17,7 +17,9 @@ if __name__ == '__main__':
     myGrammar = Grammar("g1.txt")
     myGrammar.readFromFile()
     parser = Parser(myGrammar)
-    parser.canonical_colection()
+    lr0 = parser.canonical_colection()
+    for item in lr0:
+        print(item)
     # parser.closure()
     while True:
         printMenu()

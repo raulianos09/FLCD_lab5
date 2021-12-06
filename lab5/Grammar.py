@@ -7,7 +7,6 @@ class Grammar:
         self.__productions = {}
 
     def getNonterminals(self):
-        print(self.__nonterminals)
         return self.__nonterminals
 
     def getInitialNonterminal(self):
