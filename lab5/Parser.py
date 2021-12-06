@@ -28,6 +28,7 @@ class Parser:
                                     C.append(productions)
             if lenC == len(C):
                 break
+        return C
 
     def check_dot_before_nonTerminal(self,s):
         dot_index = s.find(".")
@@ -58,9 +59,12 @@ class Parser:
 
     def goTo(self, state, x):
         gt = []
-        for states in state:
-            print("States: " + states)
-            dot_index = states.find(".")
-            if states[dot_index+2: ].split(" ")[0] == x:
-               gt.append(self.closure(states))
+        print("State")
+        print(state)
+        for productions in state:
+            for nonterminal in productions.keys():
+                for production in productions[nonterminal]:
+                    dot_index = production.find(".")
+                    if production[dot_index+2: ].split(" ")[0] == x:
+                        gt.append(self.closure(production))
         return gt
