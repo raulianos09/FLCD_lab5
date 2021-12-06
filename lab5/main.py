@@ -17,6 +17,7 @@ if __name__ == '__main__':
     myGrammar = Grammar("g1.txt")
     myGrammar.readFromFile()
     parser = Parser(myGrammar)
+    parser.canonical_colection()
     # parser.closure()
     while True:
         printMenu()

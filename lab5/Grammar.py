@@ -7,16 +7,15 @@ class Grammar:
         self.__productions = {}
 
     def getNonterminals(self):
-        toPrint = ""
-        for x in self.__nonterminals:
-            toPrint += x + " "
-        return toPrint
+        print(self.__nonterminals)
+        return self.__nonterminals
 
     def getInitialNonterminal(self):
         return self.__initialNonterminal
 
     def setInitialNonterminal(self, newNonTerminal):
         self.__initialNonterminal = newNonTerminal
+        self.__nonterminals.append(newNonTerminal)
 
     def getTerminals(self):
         return self.__terminals
@@ -25,7 +24,16 @@ class Grammar:
         return self.__productions
 
     def setProductions(self, key, value, indexOfValue):
-        self.__productions[key][indexOfValue] = value
+        listOfProductions = []
+        currentIndex = 0
+        for string in self.__productions[key]:
+            if currentIndex == indexOfValue:
+                listOfProductions.append(value)
+            else:
+                listOfProductions.append(string)
+            currentIndex += 1
+
+        self.__productions.update({key : listOfProductions})
 
     def getProductionsForNonterminal(self, nonterminal):
         return self.__productions[nonterminal]
