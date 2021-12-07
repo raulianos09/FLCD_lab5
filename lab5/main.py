@@ -17,10 +17,11 @@ if __name__ == '__main__':
     myGrammar = Grammar("g1.txt")
     myGrammar.readFromFile()
     parser = Parser(myGrammar)
-    lr0 = parser.canonical_colection()
-    for item in lr0:
-        print(item)
-    # parser.closure()
+    lr0 = parser.col_can_LR0()
+    for c in lr0:
+        print("State")
+        for production in c:
+            print(production)
     while True:
         printMenu()
         operation = int(input("Please enter a command:\n"))
@@ -34,7 +35,8 @@ if __name__ == '__main__':
             print("The set of productions is: ", myGrammar.getProductions())
         if operation == 4:
             nonterminal = input("nonterminal = ")
-            print("The productions for nonterminal '", nonterminal, "' is: ",myGrammar.getProductionsForNonterminal(nonterminal))
+            print("The productions for nonterminal '", nonterminal, "' is: ",
+                  myGrammar.getProductionsForNonterminal(nonterminal))
         if operation == 5:
             if myGrammar.checkCFG():
                 print("The given grammar is Context Free")
@@ -42,4 +44,3 @@ if __name__ == '__main__':
                 print("The given grammar is not Context Free")
         if operation not in range(0, 6):
             print("Inexistent command")
-

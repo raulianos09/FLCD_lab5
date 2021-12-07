@@ -6,6 +6,9 @@ class Grammar:
         self.__terminals = []
         self.__productions = {}
 
+    def getAlphabet(self):
+        return list(self.getNonterminals()) + list(self.getTerminals())
+
     def getNonterminals(self):
         return self.__nonterminals
 
