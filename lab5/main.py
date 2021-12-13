@@ -17,16 +17,13 @@ def printMenu():
 if __name__ == '__main__':
     myGrammar = Grammar("g1.txt")
     myGrammar.readFromFile()
-    print(myGrammar.getProductionsNumbers())
+    print("Grammar is: \n" + str(myGrammar.getProductionsNumbers()) + "\n")
     myParser = Parser(myGrammar)
-    print(myParser.getAugmentedGrammar())
-    lr0 = myParser.col_can_LR0()
-    for c in lr0:
-        print("State")
-        for production in c:
-            print(production)
+    myStates = myParser.col_can_LR0()
+    myParsingTable = ParsingTable.ParsingTable(myGrammar, myParser, myStates)
+    print("States are:")
+    myParsingTable.print_states()
 
-    # myParsingTable = ParsingTable.ParsingTable(myGrammar)
     while True:
         printMenu()
         operation = int(input("Please enter a command:\n"))
