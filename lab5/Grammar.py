@@ -20,17 +20,25 @@ class Grammar:
         return self.__initialNonterminal
 
 
-    def setInitialNonterminal(self, newNonTerminal):
-        self.__initialNonterminal = newNonTerminal
-        self.__nonterminals.append(newNonTerminal)
-
-
     def getTerminals(self):
         return self.__terminals
 
 
     def getProductions(self):
         return self.__productions
+
+
+    def getProductionsForNonterminal(self, nonterminal):
+        return self.__productions[nonterminal]
+
+
+    def getProductionsNumbers(self):
+        return self.__productionNumbers
+
+
+    def setInitialNonterminal(self, newNonTerminal):
+        self.__initialNonterminal = newNonTerminal
+        self.__nonterminals.append(newNonTerminal)
 
 
     def setProductions(self, key, value, indexOfValue):
@@ -46,14 +54,6 @@ class Grammar:
         self.__productions.update({key : listOfProductions})
 
 
-    def getProductionsForNonterminal(self, nonterminal):
-        return self.__productions[nonterminal]
-
-
-    def getProductionsNumbers(self):
-        return self.__productionNumbers
-
-
     def readFromFile(self):
         faFile = open(self.__faFilename, "r")
         lines = faFile.readlines()
@@ -67,7 +67,8 @@ class Grammar:
                 production_nr += 1
                 lhs, rhs = line.split("=")
                 lhs = lhs.strip()
-                rhs = rhs.strip()
+                # rhs = list of terminals and/or non-terminals
+                rhs = rhs.split()
                 self.addProduct(lhs, rhs)
                 self.addProductNumber(lhs, rhs, production_nr)
 
@@ -83,7 +84,7 @@ class Grammar:
 
     def addProductNumber(self, lhs, rhs, production_nr):
         # here we assign the index number to the production
-        self.__productionNumbers[lhs + " " + rhs] = production_nr
+        self.__productionNumbers[lhs + " = " + str(rhs)] = production_nr
 
 
     def checkCFG(self):

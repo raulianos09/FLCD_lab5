@@ -7,7 +7,7 @@ class Production:
         self.lhs = lhs
 
     def __str__(self):
-        return "Production: {} -> {}".format(self.lhs, "".join(self.rhs))
+        return "Production: {} -> {}".format(self.lhs, self.rhs)
 
     def __hash__(self):
         return hash(self.lhs)
@@ -23,11 +23,18 @@ class Parser:
         self.augment_grammar()
 
     def augment_grammar(self):
-        self.grammar.addProduct("S\'", "S")
-        for non_terminal in self.grammar.getProductions():
-            for production in self.grammar.getProductions()[non_terminal]:
-                self.productions.append(Production(non_terminal, ["."] + production.strip().split()))
+        self.grammar.addProduct("S\'", ["S"])
+        for lhs in self.grammar.getProductions().keys():
+            for rhs in self.grammar.getProductions()[lhs]:
+                rhs.insert(0, ".")
+                self.productions.append(Production(lhs, rhs))
         self.grammar.setInitialNonterminal("S\'")
+
+    def getAugmentedGrammar(self):
+        toPrint = ""
+        for p in self.productions:
+            toPrint += str(p) + "\n"
+        return toPrint
 
     def col_can_LR0(self):
         s0 = self.closure(Production("S\'", [".", "S"]))
@@ -51,7 +58,7 @@ class Parser:
                 condition, nonterminal = self.dot_before_nonterminal(production)
                 if condition is True:
                     for p in self.grammar.getProductionsForNonterminal(nonterminal):
-                        newProd = Production(nonterminal, ["."] + p.strip().split(" "))
+                        newProd = Production(nonterminal, p)
                         if newProd not in closure:
                             closure.append(newProd)
         return closure
