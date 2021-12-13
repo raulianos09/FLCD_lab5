@@ -16,6 +16,7 @@ class ParsingTable:
 
     def get_actions(self):
         for state in self.canCol:
+            pass
 
     def action(self,state):
         for production in state:

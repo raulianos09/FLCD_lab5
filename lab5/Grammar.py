@@ -5,25 +5,33 @@ class Grammar:
         self.__nonterminals = []
         self.__terminals = []
         self.__productions = {}
+        self.__productionNumbers = {}
+
 
     def getAlphabet(self):
         return list(self.getNonterminals()) + list(self.getTerminals())
 
+
     def getNonterminals(self):
         return self.__nonterminals
 
+
     def getInitialNonterminal(self):
         return self.__initialNonterminal
+
 
     def setInitialNonterminal(self, newNonTerminal):
         self.__initialNonterminal = newNonTerminal
         self.__nonterminals.append(newNonTerminal)
 
+
     def getTerminals(self):
         return self.__terminals
 
+
     def getProductions(self):
         return self.__productions
+
 
     def setProductions(self, key, value, indexOfValue):
         listOfProductions = []
@@ -37,30 +45,45 @@ class Grammar:
 
         self.__productions.update({key : listOfProductions})
 
+
     def getProductionsForNonterminal(self, nonterminal):
         return self.__productions[nonterminal]
+
+
+    def getProductionsNumbers(self):
+        return self.__productionNumbers
+
 
     def readFromFile(self):
         faFile = open(self.__faFilename, "r")
         lines = faFile.readlines()
-        self.__initialNonterminal = lines[0].strip();
+        self.__initialNonterminal = lines[0].strip()
         self.__nonterminals = lines[1].split()
         self.__terminals = lines[2].split()
 
+        production_nr = 0
         for line in lines[3:]:
             if line != "\n":
-                nonterminal, production = line.split("=")
-                nonterminal = nonterminal.strip()
-                production = production.strip()
-                self.addProduct(nonterminal, production)
+                production_nr += 1
+                lhs, rhs = line.split("=")
+                lhs = lhs.strip()
+                rhs = rhs.strip()
+                self.addProduct(lhs, rhs)
+                self.addProductNumber(lhs, rhs, production_nr)
 
         faFile.close()
 
-    def addProduct(self, nonterminal, production):
-        if nonterminal not in self.__productions.keys():
-            self.__productions[nonterminal] = [production]
+
+    def addProduct(self, lhs, rhs):
+        if lhs not in self.__productions.keys():
+            self.__productions[lhs] = [rhs]
         else:
-            self.__productions[nonterminal].append(production)
+            self.__productions[lhs].append(rhs)
+
+
+    def addProductNumber(self, lhs, rhs, production_nr):
+        # here we assign the index number to the production
+        self.__productionNumbers[lhs + " " + rhs] = production_nr
 
 
     def checkCFG(self):

@@ -16,6 +16,7 @@ def printMenu():
 if __name__ == '__main__':
     myGrammar = Grammar("g1.txt")
     myGrammar.readFromFile()
+    print(myGrammar.getProductionsNumbers())
     parser = Parser(myGrammar)
     lr0 = parser.col_can_LR0()
     for c in lr0:
