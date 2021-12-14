@@ -15,14 +15,18 @@ def printMenu():
 
 
 if __name__ == '__main__':
+    grammar = Grammar("g1.txt")
+    grammar.readFromFile()
+    print("Grammar is: \n" + str(grammar.getProductionsNumbers()) + "\n")
+    myParser = Parser(grammar)
+    myStates = myParser.col_can_LR0()
     myGrammar = Grammar("g1.txt")
     myGrammar.readFromFile()
-    print("Grammar is: \n" + str(myGrammar.getProductionsNumbers()) + "\n")
-    myParser = Parser(myGrammar)
-    myStates = myParser.col_can_LR0()
     myParsingTable = ParsingTable.ParsingTable(myGrammar, myParser, myStates)
     print("States are:")
     myParsingTable.print_states()
+    myParsingTable.constructParsingTable()
+    myParsingTable.printTable()
 
     while True:
         printMenu()

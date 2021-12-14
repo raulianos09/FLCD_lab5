@@ -63,9 +63,9 @@ class Parser:
                             closure.append(newProd)
         return closure
 
-    def goTo(self, state, x):
+    def goTo(self, productionList, x):
         gt = []
-        for production in state:
+        for production in productionList:
             if self.dot_before_symbol(production, x):
                 newProd = self.move_dot(production)
                 c = self.closure(newProd)
