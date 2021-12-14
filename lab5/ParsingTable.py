@@ -41,6 +41,10 @@ class ParsingTable:
             self.table.append(row)
             for production in state.getProductions():
                 action, literal = self.action(production)
+                if action != first_action:
+                    print(first_action + "-" + action + " conflict on state s" + str(state))
+                    return
+                first_action = action
                 row[0] = action
                 if action == "shift":
                     newState = State(79)
